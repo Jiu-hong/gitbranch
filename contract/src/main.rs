@@ -18,11 +18,8 @@ use casper_types::{ApiError, Key};
 
 #[no_mangle]
 pub extern "C" fn call() {
-    let named_keys = runtime::list_named_keys();
-    for (key,_) in named_keys {
-        if key.starts_with("cep47-nft-2") {
-            runtime::remove_key(&key);
-        }
-    }
-    
+    let a =  storage::new_dictionary("mydic").unwrap_or_revert();
+    let b = runtime::get_key("mydic").unwrap_or_revert();
+    runtime::put_key("myvalue1", a.into());
+    runtime::put_key("myvalue", b);
 }
